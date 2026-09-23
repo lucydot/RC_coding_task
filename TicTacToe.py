@@ -1,21 +1,5 @@
 #!/usr/bin/env python3
 
-# Notes
-
-## I've not used any AI/LLMs (incl. AI auto-complete)
-## There are a few in-line comments re: design decisions
-
-# New functionality / improvements
-
-## Control game settings through a yaml file or similar
-## Create a GUI
-## Implement a computer player
-## Allow remote playing through Github or similar?
-## Implement logging
-## A more succinct way of determining win state
-## Could work out when a game is drawn (ahead of board being full)
-## Generalise it away from being 3x3 or being a square
-
 class TicTacToe: # I've created a class so that I don't need to shuttle around lots of variables 
 
     def __init__(
