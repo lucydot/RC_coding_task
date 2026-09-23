@@ -13,6 +13,7 @@
 ## Allow remote playing through Github or similar?
 ## Implement logging
 ## A more succinct way of determining win state
+## Could work out when a game is drawn (ahead of board being full)
 
 class TicTacToe: # I've created a class so that I don't need to shuttle around lots of variables 
 
@@ -31,7 +32,11 @@ class TicTacToe: # I've created a class so that I don't need to shuttle around l
 
         self.welcome_message()
 
-        while self.check_winner() is False:
+        while self.winner_exists() is False:
+
+            if self.full_board() is True:
+                self.draw_message()
+                return
 
             self.current_player, self.next_player = self.next_player, self.current_player # this needs to come at the start rather than the end or the winner is stated wrongly
             current_input = player_input(self.current_player)  # I've went back on forth on this being an attribute or not but decided no as it could be garbage and I'm not heading down the setter path 
@@ -46,7 +51,7 @@ class TicTacToe: # I've created a class so that I don't need to shuttle around l
             self.update_board()
             self.display_board()
 
-        self.goodbye_message()
+        self.win_message()
 
     def welcome_message(self):
 
@@ -58,7 +63,14 @@ class TicTacToe: # I've created a class so that I don't need to shuttle around l
 
         print(f"{self.board[0]}\n{self.board[1]}\n{self.board[2]}")
 
-    def check_winner(self):   # It would be nice to find a more succinct way of doing this, perhaps using knowledge of the winning move?
+    def full_board(self):
+
+        if None in [square for row in self.board for square in row]:  # this is a bit dense to read but I'm trying to avoid using external libraries which implement their own flatten functions
+            return False
+        else:
+            return True
+
+    def winner_exists(self):   # It would be nice to find a more succinct way of doing this, perhaps using knowledge of the winning move?
 
         if self.board[0][0] == self.board[0][1] == self.board[0][2] and self.board[0][0] is not None:
             return True
@@ -114,25 +126,27 @@ class TicTacToe: # I've created a class so that I don't need to shuttle around l
 
     def str_to_index(self, current_input):   
 
-        if current_input is not None:
+        str_to_index_dict = {
+            "top-left": (0,0),
+            "top-middle": (0,1),
+            "top-right": (0,2),
+            "middle-left": (1,0),
+            "middle-middle": (1,1),
+            "middle-right": (1,2),
+            "bottom-left": (2,0),
+            "bottom-middle": (2,1),
+            "bottom-right": (2,2)
+        }
 
-            str_to_index_dict = {
-                "top-left": (0,0),
-                "top-middle": (0,1),
-                "top-right": (0,2),
-                "middle-left": (1,0),
-                "middle-middle": (1,1),
-                "middle-right": (1,2),
-                "bottom-left": (2,0),
-                "bottom-middle": (2,1),
-                "bottom-right": (2,2)
-            }
-
-            return str_to_index_dict[current_input]
+        return str_to_index_dict[current_input]
         
-    def goodbye_message(self):
+    def win_message(self):
 
-        print("Congratulations {}, you are the winner!".format(self.current_player))        
+        print("Congratulations {}, you are the winner!".format(self.current_player))   
+
+    def draw_message(self):
+
+        print("It's a Draw!")     
 
 def player_names():  # I'm keeping the user input functions outside the class to de-couple player input and game mechanics
 
