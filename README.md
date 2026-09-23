@@ -12,6 +12,7 @@ Coding task for the RC pair programming interview. I have selected the TicTacToe
 - I also used StackOverflow
 - I've spent about half a day on this; my commits to this repo indicate how the code evolved
 - I've left a few in-line comments regarding design decisions
+- I started generalising to other grid sizes, this is half done (could be completed during interview?)
 
 ## Potential new functionality / improvements
 
