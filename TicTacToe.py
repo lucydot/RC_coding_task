@@ -14,7 +14,7 @@
 ## Implement logging
 ## A more succinct way of determining win state
 ## Could work out when a game is drawn (ahead of board being full)
-## Generalise it away from being a square
+## Generalise it away from being 3x3 or being a square
 
 class TicTacToe: # I've created a class so that I don't need to shuttle around lots of variables 
 
@@ -58,7 +58,7 @@ class TicTacToe: # I've created a class so that I don't need to shuttle around l
 
     def welcome_message(self):
 
-        print("""Welcome to Lucy's TicTacToe. To specify a position use e.g. "top-left", "middle-left", "bottom-middle", "middle-middle". You know the rest of the rules...""" )
+        print("""Welcome to Lucy's TicTacToe. Your grid is 3x3. To specify a position use e.g. "top-left", "middle-left", "bottom-middle", "middle-middle". You know the rest of the rules...""" )
         print("{}, you will play first with the X counters".format(self.player_one_name))
         print("{}, you will play second with the O counters".format(self.player_two_name))
 
@@ -142,11 +142,10 @@ def game_settings():  # I'm keeping the user input functions outside the class t
 
     player_one_name = input("Enter player one name: ")
     player_two_name = input("Enter player two name: ")
-    grid_size = input("Enter the grid size: ")
     game_settings = {
         "player_one_name": player_one_name,
         "player_two_name": player_two_name,
-        "grid_size": int(grid_size) # should check this is allowed, could enforce type using argparse or similar
+        "grid_size": 3 # should make this so that user can input
     }
 
     return game_settings
