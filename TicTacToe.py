@@ -113,26 +113,21 @@ class TicTacToe:
         else:
             return True
 
-    def str_to_index(self, user_input):   # TODO: find a nicer way to define a set of mappings
+    def str_to_index(self, user_input):   
 
-        if user_input == "top-left":
-            return 0,0
-        elif user_input == "top-middle":
-            return 0,1
-        elif user_input == "top-right":
-            return 0,2
-        elif user_input == "middle-left":
-            return 1,0
-        elif user_input == "middle-middle":
-            return 1,1
-        elif user_input == "middle-right":
-            return 1,2
-        elif user_input == "bottom-left":
-            return 2,0
-        elif user_input == "bottom-middle":
-            return 2,1
-        elif user_input == "bottom-right":
-            return 2,2
+        str_to_index_dict = {
+            "top-left": (0,0),
+            "top-middle": (0,1),
+            "top-right": (0,2),
+            "middle-left": (1,0),
+            "middle-middle": (1,1),
+            "middle-right": (1,2),
+            "bottom-left": (2,0),
+            "bottom-middle": (2,1),
+            "bottom-right": (2,2)
+        }
+
+        return str_to_index_dict[user_input]
         
     def goodbye_message(self):
 
