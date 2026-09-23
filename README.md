@@ -10,8 +10,9 @@ During your interview, you'll pair on extending the game in a way of your choosi
 
 ## Notes
 
-- I've not used any AI/LLMs (incl. AI auto-complete)
-- I have used StackOverflow
+- I've not used any agential AI or AI auto-complete
+- I used Claude lightly, in a similar way to a search engine
+- I also used StackOverflow
 - I've spent about half a day on this; my commits to this repo indicate how the code evolved
 - I've left a few in-line comments regarding design decisions
 
