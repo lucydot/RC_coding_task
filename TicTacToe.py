@@ -14,16 +14,19 @@
 ## Implement logging
 ## A more succinct way of determining win state
 ## Could work out when a game is drawn (ahead of board being full)
+## Generalise it away from being a square
 
 class TicTacToe: # I've created a class so that I don't need to shuttle around lots of variables 
 
     def __init__(
             self,
-            player_names
+            game_settings
     ):
-        
-        self.player_one_name, self.player_two_name = player_names
-        self.board = [[None,None,None],[None,None,None],[None,None,None]]
+
+        self.grid_size = game_settings["grid_size"]
+        self.player_one_name = game_settings["player_one_name"]
+        self.player_two_name = game_settings["player_two_name"]
+        self.board = [[None]*self.grid_size for i in range(self.grid_size)]
         self.current_input_indices = None
         self.current_player = self.player_two_name # note that these get switched before first move is played
         self.next_player = self.player_one_name
@@ -61,43 +64,30 @@ class TicTacToe: # I've created a class so that I don't need to shuttle around l
 
     def display_board(self):
 
-        print(f"{self.board[0]}\n{self.board[1]}\n{self.board[2]}")
+        for row in self.board:
+            print(row)
 
     def full_board(self):
 
         if None in [square for row in self.board for square in row]:  # this is a bit dense to read but I'm trying to avoid using external libraries which implement their own flatten functions
             return False
-        else:
-            return True
+        
+        return True
 
-    def winner_exists(self):   # It would be nice to find a more succinct way of doing this, perhaps using knowledge of the winning move?
+    def winner_exists(self):   # Could perhaps improve this using knowledge of the winning move?
 
-        if self.board[0][0] == self.board[0][1] == self.board[0][2] and self.board[0][0] is not None:
-            return True
+        n = self.grid_size
+        columns = [[self.board[i][j] for i in range(n)] for j in range(n)]
+        primary_diagonal = [[self.board[i][i] for i in range(n)]] 
+        secondary_diagonal = [[self.board[i][n-1-i] for i in range(n)]]
 
-        elif self.board[1][0] == self.board[1][1] == self.board[1][2] and self.board[1][0] is not None: 
-            return True
+        lines = self.board + columns + primary_diagonal + secondary_diagonal
 
-        elif self.board[2][0] == self.board[2][1] == self.board[2][2] and self.board[2][0] is not None:
-            return True
+        for line in lines:
+            if line[0] is not None and all(counter == line[0] for counter in line):
+                return True
 
-        elif self.board[0][0] == self.board[1][0] == self.board[2][0] and self.board[0][0] is not None:
-            return True
-
-        elif self.board[0][1] == self.board[1][1] == self.board[2][1] and self.board[0][1] is not None:
-            return True
-
-        elif self.board[0][2] == self.board[1][2] == self.board[2][2] and self.board[0][2] is not None:
-            return True
-
-        elif self.board[0][0] == self.board[1][1] == self.board[2][2] and self.board[0][0] is not None:
-            return True
-
-        elif self.board[0][2] == self.board[1][1] == self.board[2][0] and self.board[0][2] is not None:
-            return True
-
-        else:
-            return False
+        return False
 
     def update_board(self):
 
@@ -112,8 +102,8 @@ class TicTacToe: # I've created a class so that I don't need to shuttle around l
         if self.board[current_input_indices[0]][current_input_indices[1]] is not None:
             print("This space is occupied. Try Again.")
             return False
-        else:
-            return True 
+        
+        return True 
 
     def validate_input(self, current_input):
 
@@ -121,8 +111,8 @@ class TicTacToe: # I've created a class so that I don't need to shuttle around l
         if current_input not in valid_player_inputs:
             print("This is not a valid input position. Try Again.")
             return False
-        else:
-            return True
+        
+        return True
 
     def str_to_index(self, current_input):   
 
@@ -148,12 +138,18 @@ class TicTacToe: # I've created a class so that I don't need to shuttle around l
 
         print("It's a Draw!")     
 
-def player_names():  # I'm keeping the user input functions outside the class to de-couple player input and game mechanics
+def game_settings():  # I'm keeping the user input functions outside the class to de-couple player input and game mechanics
 
     player_one_name = input("Enter player one name: ")
     player_two_name = input("Enter player two name: ")
+    grid_size = input("Enter the grid size: ")
+    game_settings = {
+        "player_one_name": player_one_name,
+        "player_two_name": player_two_name,
+        "grid_size": int(grid_size) # should check this is allowed, could enforce type using argparse or similar
+    }
 
-    return player_one_name, player_two_name
+    return game_settings
 
 def player_input(current_player):
 
@@ -162,6 +158,6 @@ def player_input(current_player):
 
 if __name__ == "__main__":
 
-    game = TicTacToe(player_names())
+    game = TicTacToe(game_settings())
     game.play()
 
