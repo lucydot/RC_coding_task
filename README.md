@@ -2,11 +2,8 @@
 
 Coding task for the RC pair programming interview. I have selected the TicTacToe game as it seems comfortably in my wheelhouse and I'd like to schedule my next interview ASAP :)
 
-```
-Before your interview, write a program that lets two humans play a game of Tic Tac Toe. The interface can be terminal-based or a full GUI. Players should be able to take turns making moves, and the program should report the outcome of the game.
+*Before your interview, write a program that lets two humans play a game of Tic Tac Toe. The interface can be terminal-based or a full GUI. Players should be able to take turns making moves, and the program should report the outcome of the game. During your interview, you'll pair on extending the game in a way of your choosing. For example, you might add support for a computer player to your game, starting with random moves and then making the AI smarter if you have time.*
 
-During your interview, you'll pair on extending the game in a way of your choosing. For example, you might add support for a computer player to your game, starting with random moves and then making the AI smarter if you have time.
-```
 
 ## Notes
 
@@ -15,6 +12,7 @@ During your interview, you'll pair on extending the game in a way of your choosi
 - I also used StackOverflow
 - I've spent about half a day on this; my commits to this repo indicate how the code evolved
 - I've left a few in-line comments regarding design decisions
+- I started generalising to other grid sizes, this is half done (could be completed during interview?)
 
 ## Potential new functionality / improvements
 
