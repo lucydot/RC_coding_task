@@ -47,30 +47,7 @@ class TicTacToe:
             self.display_board()
 
         self.win_message()
-
-    def welcome_message(self):
-
-        print("""Welcome to Lucy's TicTacToe. The grid size is 3x3. 
-        To specify a position use e.g. "top-left", "middle-left", 
-        "bottom-middle", "middle-middle". You know the rest of the rules...""")
-        print(
-            f"{self.player_one_name}, you will play first with the X counters"
-        )
-        print(
-            f"{self.player_two_name}, you will play second with the O counters"
-        )
-
-    def display_board(self):
-
-        for row in self.board:
-            print(row)
-
-    def full_board(self):
-
-        # this is a bit dense to read but I'm trying to avoid using external
-        # libraries which implement their own flatten functions
-        return None not in [square for row in self.board for square in row]
-
+        
     # Could perhaps improve this using knowledge of the winning move?
     def winner_exists(self):
 
@@ -89,28 +66,11 @@ class TicTacToe:
 
         return False
 
-    def update_board(self):
+    def full_board(self):
 
-        if self.current_player == self.player_one_name:
-            self.board[self.current_input_indices[0]][
-                self.current_input_indices[1]
-            ] = "X"
-        else:
-            self.board[self.current_input_indices[0]][
-                self.current_input_indices[1]
-            ] = "O"
-
-    def check_square_empty(self, current_input):
-
-        current_input_indices = self.str_to_index(current_input)
-        if (
-            self.board[current_input_indices[0]][current_input_indices[1]]
-            is not None
-        ):
-            print("This space is occupied. Try Again.")
-            return False
-
-        return True
+        # this is a bit dense to read but I'm trying to avoid using external
+        # libraries which implement their own flatten functions
+        return None not in [square for row in self.board for square in row]
 
     def validate_input(self, current_input):
 
@@ -127,6 +87,18 @@ class TicTacToe:
         ]
         if current_input not in valid_player_inputs:
             print("This is not a valid input position. Try Again.")
+            return False
+
+        return True
+    
+    def check_square_empty(self, current_input):
+
+        current_input_indices = self.str_to_index(current_input)
+        if (
+            self.board[current_input_indices[0]][current_input_indices[1]]
+            is not None
+        ):
+            print("This space is occupied. Try Again.")
             return False
 
         return True
@@ -148,6 +120,34 @@ class TicTacToe:
 
         return str_to_index_dict[current_input]
 
+    def update_board(self):
+
+        if self.current_player == self.player_one_name:
+            self.board[self.current_input_indices[0]][
+                self.current_input_indices[1]
+            ] = "X"
+        else:
+            self.board[self.current_input_indices[0]][
+                self.current_input_indices[1]
+            ] = "O"
+
+    def display_board(self):
+
+        for row in self.board:
+            print(row)
+
+    def welcome_message(self):
+
+        print("""Welcome to Lucy's TicTacToe. The grid size is 3x3. 
+        To specify a position use e.g. "top-left", "middle-left", 
+        "bottom-middle", "middle-middle". You know the rest of the rules...""")
+        print(
+            f"{self.player_one_name}, you will play first with the X counters"
+        )
+        print(
+            f"{self.player_two_name}, you will play second with the O counters"
+        )
+
     def win_message(self):
 
         print(f"Congratulations {self.current_player}, you are the winner!")
@@ -155,7 +155,6 @@ class TicTacToe:
     def draw_message(self):
 
         print("It's a Draw!")
-
 
 # I'm keeping the user input functions outside the class to
 # de-couple player input and game mechanics
@@ -171,14 +170,12 @@ def game_settings():
 
     return game_settings
 
-
 def player_input(current_player):
 
     player_input = input(
         f"{current_player}, where would you like to place your counter? "
     )
     return player_input.strip()  # remove any whitespace
-
 
 if __name__ == "__main__":
     game = TicTacToe(game_settings())
