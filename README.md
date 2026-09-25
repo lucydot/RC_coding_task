@@ -19,6 +19,7 @@ Coding task for the RC pair programming interview. I have selected the TicTacToe
 I'm listing ideas here as they occur to me:
 
 - Create a GUI
+- Create a fun sonified version!
 - Implement a computer player
 - Support for two people playing remotely through Github or similar
 - Find a cleverer way of determining win state using knowledge of the latest move
