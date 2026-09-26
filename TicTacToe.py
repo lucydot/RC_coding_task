@@ -73,9 +73,11 @@ class TicTacToe:
 
     def validate_input(self, current_input):
 
+        current_input_list = current_input.split()
+
         try:
-            row = int(current_input[0])
-            column = int(current_input[1])
+            row = int(current_input_list[0])
+            column = int(current_input_list[1])
         except ValueError:
             print("This is not a valid input position. Try Again.")
             return False
@@ -100,7 +102,8 @@ class TicTacToe:
 
     def str_to_index(self, current_input):
 
-        return (int(current_input[0]), int(current_input[1]))
+        current_input_list = current_input.split()
+        return (int(current_input_list[0]), int(current_input_list[1]))
 
     def update_board(self):
 
@@ -122,7 +125,8 @@ class TicTacToe:
 
         print(
             """Welcome to Lucy's TicTacToe. To specify the position use 
-            Python-style indexing (row first, counting from zero). You know the 
+            Python-style indexing (row first, counting from zero). 
+            Separate each index with a space. You know the 
             rest of the rules..."""
         )
         print(
