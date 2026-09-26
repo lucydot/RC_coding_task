@@ -12,13 +12,12 @@ Coding task for the RC pair programming interview. I have selected the TicTacToe
 - I also used StackOverflow
 - I've spent about half a day on this; my commits to this repo indicate how the code evolved
 - I've left a few in-line comments regarding design decisions
-- I started generalising to other grid sizes when I submitted the code, I've finished this on the branch "generalise_dims"
+- I started generalising to other grid sizes when I submitted the code, I've finished this on the branch `generalise_dims`
 
 ## Potential new functionality / improvements
 
 I'm listing ideas here as they occur to me:
 
-- Generalise the grid so that is can be any size 
 - Implement a computer player
 - Support for two people playing remotely through Github or similar
 - Create a fun sonified (sound based) version!
