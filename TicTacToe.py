@@ -4,7 +4,7 @@
 class TicTacToe:
     def __init__(self, game_settings):
 
-        self.grid_size = game_settings["grid_size"]
+        self.grid_size = int(game_settings["grid_size"])
         self.player_one_name = game_settings["player_one_name"]
         self.player_two_name = game_settings["player_two_name"]
         self.board = [[None] * self.grid_size for i in range(self.grid_size)]
@@ -17,7 +17,6 @@ class TicTacToe:
         self.welcome_message()
 
         while self.winner_exists() is False:
-            
             if self.full_board() is True:
                 self.draw_message()
                 return
@@ -47,7 +46,7 @@ class TicTacToe:
             self.display_board()
 
         self.win_message()
-        
+
     # Could perhaps improve this using knowledge of the winning move?
     def winner_exists(self):
 
@@ -74,23 +73,19 @@ class TicTacToe:
 
     def validate_input(self, current_input):
 
-        valid_player_inputs = [
-            "top-left",
-            "top-middle",
-            "top-right",
-            "middle-left",
-            "middle-middle",
-            "middle-right",
-            "bottom-left",
-            "bottom-middle",
-            "bottom-right",
-        ]
-        if current_input not in valid_player_inputs:
+        try:
+            row = int(current_input[0])
+            column = int(current_input[1])
+        except ValueError:
+            print("This is not a valid input position. Try Again.")
+            return False
+
+        if row >= self.grid_size or column >= self.grid_size:
             print("This is not a valid input position. Try Again.")
             return False
 
         return True
-    
+
     def check_square_empty(self, current_input):
 
         current_input_indices = self.str_to_index(current_input)
@@ -105,20 +100,7 @@ class TicTacToe:
 
     def str_to_index(self, current_input):
 
-        # this is the part of the code that assumes a 3x3 grid
-        str_to_index_dict = {
-            "top-left": (0, 0),
-            "top-middle": (0, 1),
-            "top-right": (0, 2),
-            "middle-left": (1, 0),
-            "middle-middle": (1, 1),
-            "middle-right": (1, 2),
-            "bottom-left": (2, 0),
-            "bottom-middle": (2, 1),
-            "bottom-right": (2, 2),
-        }
-
-        return str_to_index_dict[current_input]
+        return (int(current_input[0]), int(current_input[1]))
 
     def update_board(self):
 
@@ -138,9 +120,11 @@ class TicTacToe:
 
     def welcome_message(self):
 
-        print("""Welcome to Lucy's TicTacToe. The grid size is 3x3. 
-        To specify a position use e.g. "top-left", "middle-left", 
-        "bottom-middle", "middle-middle". You know the rest of the rules...""")
+        print(
+            """Welcome to Lucy's TicTacToe. To specify the position use 
+            Python-style indexing (row first, counting from zero). You know the 
+            rest of the rules..."""
+        )
         print(
             f"{self.player_one_name}, you will play first with the X counters"
         )
@@ -156,19 +140,24 @@ class TicTacToe:
 
         print("It's a Draw!")
 
+
 # I'm keeping the user input functions outside the class to
 # de-couple player input and game mechanics
 def game_settings():
 
     player_one_name = input("Enter player one name: ")
     player_two_name = input("Enter player two name: ")
+    grid_size = input(
+        "Enter the size of the square playing grid (as a single integer): "
+    )
     game_settings = {
         "player_one_name": player_one_name,
         "player_two_name": player_two_name,
-        "grid_size": 3,  # should make this so that user can input
+        "grid_size": grid_size,  # should make this so that user can input
     }
 
     return game_settings
+
 
 def player_input(current_player):
 
@@ -176,6 +165,7 @@ def player_input(current_player):
         f"{current_player}, where would you like to place your counter? "
     )
     return player_input.strip()  # remove any whitespace
+
 
 if __name__ == "__main__":
     game = TicTacToe(game_settings())
